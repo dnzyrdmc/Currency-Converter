@@ -1,0 +1,8 @@
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* ekran yüksekliği kadar */
+  flex-direction: column; /* istersen dikey sıralama için */
+}
