@@ -1,16 +1,16 @@
 <template>
   <div style="display:flex; justify-content:center; align-items:center; height:600px; flex-direction: column; background-color: #293133;">
-  <h1 style="color: white;">Döviz Çevirici (Frankfurter API)</h1>
+  <h1 style="color: white;">Currency Converter (Frankfurter API)</h1>
       
       <div style="color: white;">
-        <label>Miktar</label>
-        <input v-model.number="amount" type="number" placeholder="Örn: 100" />
+        <label>Amount:  </label>
+        <input v-model.number="amount" type="number" placeholder="Example: 100" />
       </div>
       
       <br>
       
       <div>
-        <label style="color: white;">Kaynak</label>
+        <label style="color: white;">From: </label>
         <select v-model="from">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
@@ -21,7 +21,7 @@
       <br>
       
       <div>
-        <label style="color: white;" >Hedef</label>
+        <label style="color: white;" >To: </label>
         <select v-model="to">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
@@ -32,14 +32,14 @@
       <br>
       
       <button @click="convert">
-        <span v-if="loading">Yükleniyor...</span>
-        <span v-else>Çevir</span>
+        <span v-if="loading">Converting...</span>
+        <span v-else>Convert</span>
       </button>
 
       <br>
 
       <div v-if="result !== null" style="color: white;">
-        Sonuç: {{ result.toFixed(2) }} {{ to }}
+        Result: {{ result.toFixed(2) }} {{ to }}
       </div>
 
       <div v-if="error" style="color: red;">
@@ -72,10 +72,10 @@
           if (data.rates && data.rates[this.to]) {
             this.result = data.rates[this.to]
           } else {
-            this.error = 'Dönüştürme başarısız oldu.'
+            this.error = 'Failed to convert.'
           }
         } catch (err) {
-          this.error = 'API HATA'
+          this.error = 'API Error'
         } finally {
           this.loading = false
         }
