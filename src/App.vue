@@ -1,85 +1,21 @@
 <template>
-  <div style="display:flex; justify-content:center; align-items:center; height:600px; flex-direction: column; background-color: #293133;">
-  <h1 style="color: white;">Döviz Çevirici (Frankfurter API)</h1>
-      
-      <div style="color: white;">
-        <label>Miktar</label>
-        <input v-model.number="amount" type="number" placeholder="Örn: 100" />
-      </div>
-      
-      <br>
-      
-      <div>
-        <label style="color: white;">Kaynak</label>
-        <select v-model="from">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="TRY">TRY</option>
-        </select>
-      </div>
-      
-      <br>
-      
-      <div>
-        <label style="color: white;" >Hedef</label>
-        <select v-model="to">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="TRY">TRY</option>
-        </select>
-      
-      </div>
-      <br>
-      
-      <button @click="convert">
-        <span v-if="loading">Yükleniyor...</span>
-        <span v-else>Çevir</span>
-      </button>
+  <div>
+    <CurrencyConverter/>
+  </div>
 
-      <br>
 
-      <div v-if="result !== null" style="color: white;">
-        Sonuç: {{ result.toFixed(2) }} {{ to }}
-      </div>
+</template>
 
-      <div v-if="error" style="color: red;">
-        {{ error }}
-      </div>
-    </div>
-  </template>
 
-  <script>
-  export default {
-    data() {
-      return {
-        from: 'USD, EUR, TRY',
-        to: 'USD, EUR, TRY',
-        result: null,
-        loading: false,
-        error: '',
-      }
-    },
-    methods: {
-      async convert() {
-        this.result = null
-        this.error = ''
-        this.loading = true
+<script>
+import CurrencyConverter from './components/CurrencyConverter.vue';
 
-        try {
-          const res = await fetch(`https://api.frankfurter.app/latest?amount=${this.amount}&from=${this.from}&to=${this.to}`)
-          const data = await res.json()
-
-          if (data.rates && data.rates[this.to]) {
-            this.result = data.rates[this.to]
-          } else {
-            this.error = 'Dönüştürme başarısız oldu.'
-          }
-        } catch (err) {
-          this.error = 'API HATA'
-        } finally {
-          this.loading = false
-        }
-      }
-    }
+export default {
+  components: {
+    CurrencyConverter
   }
-  </script>
+}
+
+
+
+</script>
