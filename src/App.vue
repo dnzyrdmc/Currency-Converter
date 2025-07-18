@@ -10,7 +10,7 @@
       <br>
       
       <div>
-        <label style="color: white;">From: </label>
+        <label style="color: white;" >From: </label>
         <select v-model="from">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
@@ -52,8 +52,9 @@
   export default {
     data() {
       return {
-        from: 'USD, EUR, TRY',
-        to: 'USD, EUR, TRY',
+        amount: null,
+        from: null,
+        to: null,
         result: null,
         loading: false,
         error: '',
@@ -66,10 +67,12 @@
         this.loading = true
 
         try {
-          const res = await fetch(`https://api.frankfurter.app/latest?amount=${this.amount}&from=${this.from}&to=${this.to}`)
+          const res = await fetch(https://api.frankfurter.app/latest?amount=${this.amount}&from=${this.from}&to=${this.to})
           const data = await res.json()
-
-          if (data.rates && data.rates[this.to]) {
+      
+          if (this.from === this.to) {
+            this.result = this.amount
+          }else if (data.rates && data.rates[this.to]) {
             this.result = data.rates[this.to]
           } else {
             this.error = 'Failed to convert.'
@@ -81,5 +84,5 @@
         }
       }
     }
-  }
-  </script>
+  }
+  </script>
